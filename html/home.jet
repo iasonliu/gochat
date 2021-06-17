@@ -6,6 +6,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 	<title>HOME</title>
+	<style>
+		.chatbox {
+			outline: 1px solid silver;
+			min-height: 160px;
+			padding: 0.5em;
+		}
+	</style>
 </head>
 <body>
 	<div class="container">
@@ -16,7 +23,22 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-8"><h3>Chat</h3></div>
+			<div class="col-md-8">
+				<h3>Chat</h3>
+				<div class="form-group">
+					<label for="username"> Username:</label>
+					<input type="text" class="form-control" id="username" name="username" autocomplete="off">
+				</div>
+				<div class="form-group">
+					<label for="message"> Message:</label>
+					<input type="text" class="form-control" id="message" name="message" autocomplete="off">
+				</div>
+				<input type="hidden" name="action" id="action">
+				<hr>
+				<div class="chatbox" id="output">
+
+				</div>
+			</div>
 			<div class="col-md-4"><h3>Who's Online</h3></div>
 		</div>
 	</div>
@@ -27,7 +49,21 @@
 	document.addEventListener("DOMContentLoaded", function() {
 		socket = new WebSocket("ws://127.0.0.1:8080/ws");
 		socket.onopen = () => {
-			console.log("Successfully connected!!!")
+			console.log("Successfully connected!!!");
+		}
+
+		socket.onclose = () => {
+			console.log("Connection closed!!!");
+		}
+
+		socket.onerror = error => {
+			console.log("There was an error!!!");
+		}
+
+		socket.onmessage = msg => {
+			console.log(msg);
+			let j = JSON.parse(msg.data)
+			console.log(j)
 		}
 	})
 </script>
