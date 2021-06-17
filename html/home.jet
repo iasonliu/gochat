@@ -56,6 +56,7 @@
 	let o = document.getElementById("output");
 	let userField = document.getElementById("username");
 	let messageField = document.getElementById("message");
+	let sendBtnField = document.getElementById("sendBtn")
 
 	window.onbeforeunload = function() {
 		console.log("Leaving...");
@@ -103,8 +104,8 @@
 					break;
 			}
 		}
-		let userInput = document.getElementById("username");
-		userInput.addEventListener("change", function () {
+
+		userField.addEventListener("change", function () {
 			let jsonData = {};
 			jsonData["action"] = "username";
 			jsonData["username"] = this.value;
@@ -112,7 +113,7 @@
 			console.log(jsonData)
 		})
 
-		document.getElementById("message").addEventListener("keydown", function(event) {
+		messageField.addEventListener("keydown", function(event) {
 			if (event.code === "Enter") {
 				if (!socket) {
 					console.log("no connetction");
@@ -128,11 +129,10 @@
 				}
 				event.preventDefault();
 				event.stopPropagation();
-				sendMessage();
 			}
 		})
 
-		document.getElementById("sendBtn").addEventListener("click", function() {
+		sendBtnField.addEventListener("click", function() {
 			if ((userField.value === "") || (messageField.value === "")) {
 				alert ("fill out user and message");
 				return false;
@@ -146,10 +146,10 @@
 	function sendMessage() {
 		let jsonData ={};
 		jsonData["action"] = "broadcast";
-		jsonData["username"] = document.getElementById("username").value;
-		jsonData["message"] = document.getElementById("message").value;
+		jsonData["username"] = userField.value;
+		jsonData["message"] = messageField.value;
 		socket.send(JSON.stringify(jsonData))
-		document.getElementById("message").value = "";
+		messageField.value = "";
 	}
 </script>
 </html>
