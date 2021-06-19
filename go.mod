@@ -4,6 +4,9 @@ go 1.15
 
 require (
 	github.com/CloudyKit/jet/v6 v6.1.0
-	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
+	github.com/gorilla/handlers v1.5.1
+	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.4.2
+	github.com/hashicorp/go-hclog v0.16.1
+	github.com/iasonliu/env v0.6.1
 )
