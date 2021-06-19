@@ -21,18 +21,14 @@ func main() {
 
 	l := hclog.New(
 		&hclog.LoggerOptions{
-			Name:  "[chat-go]",
+			Name:  "GoChat",
 			Level: hclog.LevelFromString(*logLevel),
 		},
 	)
 
 	sm := mux.NewRouter()
-
-	gh := sm.Methods(http.MethodGet).Subrouter()
-	gh.HandleFunc("/", handlers.Home)
-	gh.HandleFunc("/ws", handlers.WsEndpoint)
-	// gh.Handle("/static/reconnecting-websocket.min.js", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	gh.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
+	sm.HandleFunc("/ws", handlers.WsEndpoint)
+	sm.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 
 	// create a logger for the server from the default logger
 	sl := l.StandardLogger(&hclog.StandardLoggerOptions{InferLevels: true})
