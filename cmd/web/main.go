@@ -27,10 +27,13 @@ func main() {
 	)
 
 	sm := mux.NewRouter()
+
 	gh := sm.Methods(http.MethodGet).Subrouter()
 	gh.HandleFunc("/", handlers.Home)
 	gh.HandleFunc("/ws", handlers.WsEndpoint)
-	gh.Handle("/static/reconnecting-websocket.min.js", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	// gh.Handle("/static/reconnecting-websocket.min.js", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	gh.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
+
 	// create a logger for the server from the default logger
 	sl := l.StandardLogger(&hclog.StandardLoggerOptions{InferLevels: true})
 
