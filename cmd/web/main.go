@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/hashicorp/go-hclog"
 	"github.com/iasonliu/env"
-	"github.com/iasonliu/ws/internal/handlers"
+	"github.com/iasonliu/gochat/internal/handlers"
 )
 
 var bindAddress = env.String("BIND_ADDRESS", false, ":8080", "Bind address for the server")
